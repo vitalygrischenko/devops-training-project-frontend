@@ -16,4 +16,5 @@ FROM nginx:latest
 COPY --from=build --chown=nginx:nginx /opt/frontend/build/ /usr/share/nginx/html/
 ARG DEFAULT_API_URL
 ENV API_URL=${DEFAULT_API_URL:-"https://conduit.productionready.io/api"}
+EXPOSE 80
 CMD sed "s|https://conduit.productionready.io/api|${API_URL}|" -i /usr/share/nginx/html/static/js/* && exec nginx -g 'daemon off;'
