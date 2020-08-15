@@ -1,8 +1,0 @@
-version: '2'
-services:
-  front:
-    build: ./frontend
-    environment:
-      - API_URL=http://backend.misha-docker.test.coherentprojects.net
-    ports:
-      - "80:80"
