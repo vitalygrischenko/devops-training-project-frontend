@@ -3,7 +3,8 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-const API_ROOT = process.env.REACT_APP_API_ROOT;
+//const API_ROOT = process.env.REACT_APP_API_ROOT;
+const API_ROOT = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_API_ROOT_PROD : process.env.REACT_APP_API_ROOT_DEV;
 
 const encode = encodeURIComponent;
 const responseBody = res => res.body;
