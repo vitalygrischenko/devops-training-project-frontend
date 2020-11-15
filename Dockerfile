@@ -1,16 +1,11 @@
 FROM node:12-stretch AS build
 LABEL maintainer="vitalygrischenko@gmail.com"
 
-ARG REPO_URL="https://github.com/vitamin-b12/devops-training-project-frontend.git"
-
 ARG API_ROOT
-
 WORKDIR /home/node/
-RUN git clone ${REPO_URL} \
-    && mv devops-training-project-frontend/* /home/node \
-    && rm -rf devops-training-project-*
 
-RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" ${WORKDIR}/src/agent.js \
+COPY --chown=0:0 . .
+RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" src/agent.js \
     npm install \
     && npm run build
 
