@@ -1,10 +1,10 @@
 FROM node:12-stretch AS build
 LABEL maintainer="vitalygrischenko@gmail.com"
 
-ARG API_ROOT="conduit.productionready.io"
+ARG API_ROOT="https://conduit.productionready.io/api"
 
 WORKDIR /home/node/
-RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" src/agent.js \
+RUN sed "s|https://conduit.productionready.io/api|${API_ROOT}|" -i src/agent.js \
     && npm install \
     && npm run build
 
