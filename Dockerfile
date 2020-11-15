@@ -6,7 +6,7 @@ WORKDIR /home/node/
 
 COPY --chown=0:0 . .
 RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" src/agent.js \
-    npm install \
+    && npm install \
     && npm run build
 
 
