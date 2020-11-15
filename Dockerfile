@@ -10,7 +10,7 @@ RUN git clone ${REPO_URL} \
     && mv devops-training-project-frontend/* /home/node \
     && rm -rf devops-training-project-*
 
-RUN RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" src/agent.js \
+RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" src/agent.js \
     npm install \
     && npm run build
 
