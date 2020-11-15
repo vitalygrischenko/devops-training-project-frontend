@@ -1,8 +1,7 @@
 FROM node:12-stretch AS build
 LABEL maintainer="vitalygrischenko@gmail.com"
 
-ARG DEFAULT_API_ROOT
-ENV API_ROOT ${DEFAULT_API_ROOT:-"https://conduit.productionready.io/api"}
+ARG API_ROOT="conduit.productionready.io"
 
 WORKDIR /home/node/
 RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" src/agent.js \
