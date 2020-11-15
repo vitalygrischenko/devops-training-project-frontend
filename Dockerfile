@@ -1,20 +1,25 @@
 FROM node:12-stretch AS build
 LABEL maintainer="vitalygrischenko@gmail.com"
 
-WORKDIR /home/node/
+ARG DEFAULT_API_ROOT
+ENV API_ROOT ${DEFAULT_API_ROOT:-"https://conduit.productionready.io/api"}
 
-COPY --chown=0:0 . .
-RUN npm install \
+WORKDIR /home/node/
+RUN git clone ${REPO_URL} \
+    && mv devops-training-project-frontend/* /home/node \
+    && rm -rf devops-training-project-*
+
+RUN sed -i "s/conduit.productionready.io\\/api/${API_ROOT}/g" src/agent.js \
+    npm install \
     && npm run build
 
 
-FROM nginx:latest AS production
+FROM nginx
 
 ENV APP_DIR="/usr/share/nginx/html/" \
     BUILD_DIR="/home/node/build"
     
 COPY --from=build --chown=nginx:nginx ${BUILD_DIR}/* ${APP_DIR}
-ARG DEFAULT_API_ROOT
-ENV API_ROOT=${DEFAULT_API_ROOT:-"https://conduit.productionready.io/api"}
-CMD sed "s|https://conduit.productionready.io/api|${API_ROOT}|" -Ei /usr/share/nginx/html/static/js/* && exec nginx -g 'daemon off;'
+
+CMD ["nginx", "-g", "daemon off;"]
 
