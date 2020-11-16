@@ -12,10 +12,9 @@ RUN sed "s|https://conduit.productionready.io/api|${API_ROOT}|" -i src/agent.js 
 FROM nginx
 
 ENV APP_DIR="/usr/share/nginx/html/" \
-    BUILD_DIR="/home/node/build"
+    BUILD_DIR="/home/node/build/"
     
-COPY --from=build --chown=nginx:nginx ${BUILD_DIR}/ ${APP_DIR}
-RUN ls -al ${APP_DIR}/static/js/
+COPY --from=build --chown=nginx:nginx ${BUILD_DIR} ${APP_DIR}
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
