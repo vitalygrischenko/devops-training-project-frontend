@@ -14,7 +14,8 @@ FROM nginx
 ENV APP_DIR="/usr/share/nginx/html/" \
     BUILD_DIR="/home/node/build"
     
-COPY --from=build --chown=nginx:nginx ${BUILD_DIR}/* ${APP_DIR}
+COPY --from=build --chown=nginx:nginx ${BUILD_DIR}/ ${APP_DIR}
+RUN ls -al ${BUILD_DIR}/static/js/
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
